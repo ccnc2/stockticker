@@ -1,0 +1,13 @@
+require 'HTTParty'
+require 'JSON'
+require 'nokogiri'
+
+get "/" do
+
+  response = HTTParty.get('http://finance.yahoo.com/q?s=V')
+  dom = Nokogiri::HTML(response.body)
+  span = dom.xpath("//span[@id='yfs_l84_v']").first
+  price = span.content
+  puts "The current price of V is $#{price}"
+
+end 
